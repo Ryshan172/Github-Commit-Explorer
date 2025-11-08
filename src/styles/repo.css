@@ -1,0 +1,38 @@
+.repo-container {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+    font-family: sans-serif;
+}
+
+.repo-list li {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.repo-list li.active {
+    background-color: #f0f0f0;
+}
+
+.commit-item {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.commit-actions button {
+    margin-right: 8px;
+}
+
+.error {
+    color: red;
+}
+
+.commit-details-modal {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-top: 1rem;
+}
