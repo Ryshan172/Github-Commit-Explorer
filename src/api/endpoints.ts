@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { handleApiError } from './helpers'
+import type { GithubRepo } from '@/types/interfaces';
 
 // Contains API calls for retrieving data
 
@@ -18,20 +19,21 @@ const api = axios.create({
  * @returns Array of repository objects
  * @throws Error if user has no repositories or API fails
  */
-export async function fetchUserRepos(username: string) {
+export async function fetchUserRepos(username: string): Promise<GithubRepo[]> {
 	try {
-		// Make GET request to GitHub API for user repositories
-		const response = await api.get(`/users/${username}/repos`)
+		const response = await api.get<GithubRepo[]>(`/users/${username}/repos`);
 
 		// Handle case when user has no public repositories
 		if (response.data.length === 0) {
-			throw new Error('This user has no public repositories.')
+			throw new Error('This user has no public repositories.');
 		}
 
-		return response.data
-	} catch (error) {
-		// Convert any axios or network errors to readable messages
-		throw new Error(handleApiError(error))
+		return response.data;
+	} catch (error: unknown) {
+		if (error instanceof AxiosError) {
+			throw new Error(handleApiError(error));
+		}
+		throw new Error('An unexpected error occurred.');
 	}
 }
 
