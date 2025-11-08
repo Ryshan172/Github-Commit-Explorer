@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios'
 import { handleApiError } from './helpers'
-import type { GithubRepo } from '@/types/interfaces';
+import type { GithubCommit, GithubRepo } from '@/types/interfaces';
 
 // Contains API calls for retrieving data
 
@@ -52,12 +52,14 @@ export async function fetchRepoCommits(
 	repo: string,
 	perPage = 10,
 	page = 1
-) {
+): Promise<GithubCommit[]> {
 	try {
-		// Make GET request with pagination parameters
-		const response = await api.get(`/repos/${username}/${repo}/commits`, {
-			params: { per_page: perPage, page },
-		})
+		const response = await api.get<GithubCommit[]>(
+			`/repos/${username}/${repo}/commits`,
+			{
+				params: { per_page: perPage, page },
+			}
+		)
 
 		// Handle case when repository has no commits
 		if (response.data.length === 0) {
@@ -83,10 +85,11 @@ export async function fetchCommitDetails(
 	username: string,
 	repo: string,
 	sha: string
-) {
+): Promise<GithubCommit> {
 	try {
-		// Make GET request to GitHub API for specific commit details
-		const response = await api.get(`/repos/${username}/${repo}/commits/${sha}`)
+		const response = await api.get<GithubCommit>(
+			`/repos/${username}/${repo}/commits/${sha}`
+		)
 		return response.data
 	} catch (error) {
 		throw new Error(handleApiError(error))

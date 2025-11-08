@@ -25,3 +25,25 @@ export interface GithubRepo {
     };
     default_branch: string;
 }
+
+export interface GithubCommit {
+    sha: string;
+    commit: {
+        author: {
+            name: string;
+            email: string;
+            date: string;
+        };
+        message: string;
+    };
+    html_url: string;
+    author?: GithubUser;
+}
+
+export interface GithubState {
+    repos: GithubRepo[];
+    commits: GithubCommit[];
+    favouriteCommits: GithubCommit[];
+    loading: boolean;
+    errorMessage: string | null;
+}
