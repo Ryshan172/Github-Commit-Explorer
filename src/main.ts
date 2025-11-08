@@ -1,13 +1,15 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import piniaPersist from 'pinia-plugin-persistedstate'
 import App from './App.vue'
-import router from './router'      // <-- import your router
-import { createPinia } from 'pinia' // <-- import Pinia
-
-import './style.css' // your global CSS
+import router from './router'
 
 const app = createApp(App)
+const pinia = createPinia()
 
-app.use(createPinia()) // <-- enable Pinia
-app.use(router)        // <-- enable Vue Router
+// Register the plugin
+pinia.use(piniaPersist)
 
+app.use(pinia)
+app.use(router)
 app.mount('#app')

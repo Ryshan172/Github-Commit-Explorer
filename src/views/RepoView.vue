@@ -1,31 +1,42 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useGithubStore } from '@/stores/github'
+import type { GithubCommit, CommitDetails } from '@/types/interfaces'
 import RepoList from '@/components/RepoList.vue'
 import CommitList from '@/components/CommitList.vue'
 import FavouriteCommits from '@/components/FavouriteCommits.vue'
 import '@/styles/repo.css'
 
+// Store & route
 const githubStore = useGithubStore()
 const route = useRoute()
 const username = route.params.username as string
 
+// Local state
 const selectedRepo = ref<string | null>(null)
 const sortOrder = ref<'newest' | 'oldest'>('newest')
 
+// Compute repoKey for favourites
+const repoKey = computed(() => {
+	return selectedRepo.value ? `${username}/${selectedRepo.value}` : ''
+})
+
+// Fetch repos on mount if not already loaded
 onMounted(async () => {
 	if (githubStore.repos.length === 0) {
 		await githubStore.loadGithubRepos(username)
 	}
 })
 
+// Select a repo and load its commits
 async function selectRepo(repoName: string) {
 	selectedRepo.value = repoName
 	await githubStore.loadGithubCommits(username, repoName)
 	sortCommits()
 }
 
+// Sort commits by date
 function sortCommits(order?: 'newest' | 'oldest') {
 	if (order) sortOrder.value = order
 	const sorted = [...githubStore.commits].sort((a, b) => {
@@ -37,27 +48,41 @@ function sortCommits(order?: 'newest' | 'oldest') {
 }
 
 /**
- * Called by CommitList to fetch commit details when drawer is opened.
- * Returns the fetched details so CommitList can display them inline.
+ * Fetch commit details for CommitList drawer
  */
-async function viewCommitDetails(sha: string, resolve: (details: any) => void) {
-	const details = await githubStore.loadCommitDetails(username, selectedRepo.value!, sha)
+async function viewCommitDetails(
+	sha: string,
+	resolve: (details: CommitDetails | null) => void
+) {
+	if (!selectedRepo.value) {
+		resolve(null)
+		return
+	}
+	const details = await githubStore.loadCommitDetails(username, selectedRepo.value, sha)
 	resolve(details)
 }
 
-
-function addFavourite(commit: any) {
-	githubStore.addFavourite(commit)
+/** Favourites handling */
+function addFavourite(commit: GithubCommit) {
+	if (repoKey.value) githubStore.addFavourite(commit, repoKey.value)
 }
 
 function removeFavourite(sha: string) {
-	githubStore.removeFavourite(sha)
+	if (repoKey.value) githubStore.removeFavourite(sha, repoKey.value)
 }
 
-function isFavourite(sha: string) {
-	return githubStore.favouriteCommits.some(c => c.sha === sha)
+function isFavourite(sha: string): boolean {
+	if (!repoKey.value) return false
+	return githubStore.getFavourites(repoKey.value).some(c => c.sha === sha)
 }
+
+// Computed favourites for template
+const currentFavourites = computed(() => {
+	return repoKey.value ? githubStore.getFavourites(repoKey.value) : []
+})
 </script>
+
+
 
 <template>
 	<div class="repo-container">
@@ -80,10 +105,11 @@ function isFavourite(sha: string) {
 			<div class="commit-panel">
 				<!-- Favourite Commits -->
 				<FavouriteCommits
-					v-if="githubStore.favouriteCommits.length"
-					:favourites="githubStore.favouriteCommits"
+					v-if="currentFavourites.length"
+					:favourites="currentFavourites"
 					class="favourite-commits-box"
 				/>
+
 				
 				<!-- Commits List -->
 				<CommitList

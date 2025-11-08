@@ -41,9 +41,58 @@ export interface GithubCommit {
 }
 
 export interface GithubState {
-    repos: GithubRepo[];
-    commits: GithubCommit[];
-    favouriteCommits: GithubCommit[];
-    loading: boolean;
-    errorMessage: string | null;
+  repos: GithubRepo[]
+  commits: GithubCommit[]
+  favouriteCommits: Record<string, GithubCommit[]> // key = `${username}/${repo}`
+  loading: boolean
+  errorMessage: string | null
+}
+
+
+export interface CommitFile {
+  filename: string;
+  additions: number;
+  deletions: number;
+  changes: number;
+  status: 'added' | 'modified' | 'removed';
+  raw_url: string;
+  blob_url: string;
+  patch?: string; // optional diff snippet
+}
+
+export interface CommitStats {
+  total: number;
+  additions: number;
+  deletions: number;
+}
+
+export interface CommitDetails {
+  sha: string;
+  commit: {
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    message: string;
+  };
+  html_url: string;
+  author?: GithubUser;
+  files: CommitFile[];
+  stats: CommitStats;
+}
+
+export interface RepoListProps {
+  repos: GithubRepo[];
+  selectedRepo: string | null;
+}
+
+export interface CommitListProps {
+  commits: GithubCommit[];
+  sortOrder: 'newest' | 'oldest';
+  isFavourite: (sha: string) => boolean;
+}
+
+export interface FavouriteCommitsProps {
+  favourites: GithubCommit[];
 }
