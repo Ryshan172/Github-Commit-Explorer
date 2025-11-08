@@ -5,7 +5,6 @@ import { useGithubStore } from '@/stores/github'
 import RepoList from '@/components/RepoList.vue'
 import CommitList from '@/components/CommitList.vue'
 import FavouriteCommits from '@/components/FavouriteCommits.vue'
-import CommitDetailsModal from '@/components/CommitDetailsModal.vue'
 import '@/styles/repo.css'
 
 const githubStore = useGithubStore()
@@ -13,7 +12,6 @@ const route = useRoute()
 const username = route.params.username as string
 
 const selectedRepo = ref<string | null>(null)
-const selectedCommitDetails = ref<any | null>(null)
 const sortOrder = ref<'newest' | 'oldest'>('newest')
 
 onMounted(async () => {
@@ -38,27 +36,28 @@ function sortCommits(order?: 'newest' | 'oldest') {
 	githubStore.commits = sorted
 }
 
-async function viewCommitDetails(sha: string) {
-  	selectedCommitDetails.value = await githubStore.loadCommitDetails(username, selectedRepo.value!, sha)
+/**
+ * Called by CommitList to fetch commit details when drawer is opened.
+ * Returns the fetched details so CommitList can display them inline.
+ */
+async function viewCommitDetails(sha: string, resolve: (details: any) => void) {
+	const details = await githubStore.loadCommitDetails(username, selectedRepo.value!, sha)
+	resolve(details)
 }
 
-function closeDetails() {
-  	selectedCommitDetails.value = null
-}
 
 function addFavourite(commit: any) {
-  	githubStore.addFavourite(commit)
+	githubStore.addFavourite(commit)
 }
 
 function removeFavourite(sha: string) {
-  	githubStore.removeFavourite(sha)
+	githubStore.removeFavourite(sha)
 }
 
 function isFavourite(sha: string) {
-  	return githubStore.favouriteCommits.some(c => c.sha === sha)
+	return githubStore.favouriteCommits.some(c => c.sha === sha)
 }
 </script>
-
 
 <template>
 	<div class="repo-container">
@@ -66,33 +65,38 @@ function isFavourite(sha: string) {
 
 		<p v-if="githubStore.errorMessage" class="error">{{ githubStore.errorMessage }}</p>
 
-		<RepoList
-		v-if="githubStore.repos.length"
-		:repos="githubStore.repos"
-		:selectedRepo="selectedRepo"
-		@select="selectRepo"
-		/>
+		<div class="repo-content">
+			<!-- LEFT: Repository List -->
+			<div class="repo-list-panel">
+				<RepoList
+					v-if="githubStore.repos.length"
+					:repos="githubStore.repos"
+					:selectedRepo="selectedRepo"
+					@select="selectRepo"
+				/>
+			</div>
 
-		<CommitList
-		v-if="githubStore.commits.length"
-		:commits="githubStore.commits"
-		:sortOrder="sortOrder"
-		:isFavourite="isFavourite"
-		@sort="sortCommits"
-		@viewDetails="viewCommitDetails"
-		@addFavourite="addFavourite"
-		@removeFavourite="removeFavourite"
-		/>
-
-		<FavouriteCommits
-		v-if="githubStore.favouriteCommits.length"
-		:favourites="githubStore.favouriteCommits"
-		/>
-
-		<CommitDetailsModal
-		v-if="selectedCommitDetails"
-		:details="selectedCommitDetails"
-		@close="closeDetails"
-		/>
+			<!-- RIGHT: Commits and Favourites -->
+			<div class="commit-panel">
+				<!-- Favourite Commits -->
+				<FavouriteCommits
+					v-if="githubStore.favouriteCommits.length"
+					:favourites="githubStore.favouriteCommits"
+					class="favourite-commits-box"
+				/>
+				
+				<!-- Commits List -->
+				<CommitList
+					v-if="githubStore.commits.length"
+					:commits="githubStore.commits"
+					:sortOrder="sortOrder"
+					:isFavourite="isFavourite"
+					@sort="sortCommits"
+					@viewDetails="viewCommitDetails"
+					@addFavourite="addFavourite"
+					@removeFavourite="removeFavourite"
+				/>
+			</div>
+		</div>
 	</div>
 </template>
