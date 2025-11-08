@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router'
 import '@/styles/home.css'
 import { useGithubStore } from '@/stores/github'
 
+// Import GitHub icon from assets
+import githubIcon from '@/assets/github_icon.png'
+
 const username = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
@@ -34,17 +37,17 @@ const handleSubmit = async () => {
 
         // Check for store-level error
         if (githubStore.errorMessage) {
-        errorMessage.value = githubStore.errorMessage
-        return
+            errorMessage.value = githubStore.errorMessage
+            return
         }
 
         // Navigate to Repo page if successful
         router.push({ name: 'Repo', params: { username: username.value.trim() } })
     } catch (err: unknown) {
         if (err instanceof Error) {
-        errorMessage.value = err.message
+            errorMessage.value = err.message
         } else {
-        errorMessage.value = 'An unexpected error occurred.'
+            errorMessage.value = 'An unexpected error occurred.'
         }
     } finally {
         loading.value = false
@@ -55,18 +58,21 @@ const handleSubmit = async () => {
 
 <template>
     <div class="home-container">
-        <h1>GitHub Commit Explorer App</h1>
+        <img src="@/assets/github_icon.png" alt="GitHub Logo" class="github-icon" />
+        <h1 class="title">GitHub Commit Explorer App</h1>
         <form @submit.prevent="handleSubmit">
-        <label for="username">GitHub Username:</label>
-        <input
-            id="username"
-            v-model="username"
-            type="text"
-            placeholder="Enter GitHub username"
-            required
-        />
-        <span v-if="errorMessage" class="error">{{ errorMessage }}</span>
-        <button type="submit">{{ loading ? 'Loading...' : 'Fetch Repositories' }}</button>
+            <label for="username">GitHub Username:</label>
+            <input
+                id="username"
+                v-model="username"
+                type="text"
+                placeholder="Enter GitHub username"
+                required
+            />
+            <span v-if="errorMessage" class="error">{{ errorMessage }}</span>
+            <button type="submit" :disabled="loading">
+                {{ loading ? 'Loading...' : 'Fetch Repositories' }}
+            </button>
         </form>
     </div>
 </template>
