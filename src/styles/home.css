@@ -1,8 +1,18 @@
+/* Centering the container on the full page */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* full viewport height */
+    margin: 0;
+    background-color: #f0f2f5; /* optional background color */
+}
+
 .home-container {
-    max-width: 400px;
-    margin: 50px auto;
+    width: 500px; /* wider panel */
+    max-width: 90%; /* responsive for small screens */
+    padding: 30px;
     text-align: center;
-    padding: 20px;
     border-radius: 12px;
     background-color: #f9f9f9;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

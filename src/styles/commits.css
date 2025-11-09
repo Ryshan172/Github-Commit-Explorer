@@ -31,15 +31,34 @@
 
 .commit-main {
     display: flex;
-    justify-content: space-between;
-    align-items: start;
+    flex-direction: column; /* stack items vertically */
+    align-items: flex-start; /* align to left */
     padding: 1rem;
     gap: 1rem;
 }
 
+/* Make all buttons in commit-actions the same size */
 .commit-actions button {
     margin-left: 6px;
+    padding: 8px 12px;       /* uniform padding */
+    font-size: 14px;         /* consistent font size */
+    border-radius: 6px;
+    min-width: 80px;         /* make buttons same width */
+    text-align: center;
 }
+
+/* Hover effect */
+.commit-actions button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+
+.commit-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
 
 /* Smooth transition for drawer */
 .slide-fade-enter-active,
@@ -71,7 +90,7 @@
 .commits-scrollable {
   overflow-y: auto;      /* vertical scroll */
   flex-grow: 1;          /* take remaining height */
-  padding-right: 0.5rem; /* optional for scrollbar */
+  padding-right: 0.5rem; /* for scrollbar */
 }
 
 .commit-details-drawer {
