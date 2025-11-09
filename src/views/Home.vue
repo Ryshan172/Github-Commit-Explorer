@@ -60,7 +60,11 @@ const handleSubmit = async () => {
     <div class="home-container">
         <div class="home-content">
             <img src="@/assets/github_icon.png" alt="GitHub Logo" class="github-icon" />
-            <h1 class="title">GitHub Commit Explorer App</h1>
+            
+            <div class="title-row">
+                <h1 class="title">GitHub Commit Explorer App</h1>
+                <img src="@/assets/code_search.png" alt="Code Logo" class="title-icon" />
+            </div>
 
             <!-- Description panel -->
             <p class="description">

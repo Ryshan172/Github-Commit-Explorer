@@ -42,6 +42,17 @@ body {
     margin-bottom: 15px;
 }
 
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* space between title and icon */
+}
+
+.title-icon {
+  width: 40px;   /* smaller size */
+  height: 40px;
+}
+
 .description {
     font-size: 1.2em;           /* slightly larger text */
     color: #1b1f6b;             /* dark blue, matching the title */
