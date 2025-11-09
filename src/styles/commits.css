@@ -41,13 +41,6 @@
     margin-left: 6px;
 }
 
-.commit-details-drawer {
-    background: #fff;
-    border-top: 1px solid #ccc;
-    padding: 1rem;
-    animation: slideIn 0.3s ease;
-}
-
 /* Smooth transition for drawer */
 .slide-fade-enter-active,
 .slide-fade-leave-active {
@@ -79,4 +72,21 @@
   overflow-y: auto;      /* vertical scroll */
   flex-grow: 1;          /* take remaining height */
   padding-right: 0.5rem; /* optional for scrollbar */
+}
+
+.commit-details-drawer {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-left: 3px solid #ccc;
+  margin-top: 0.5rem;
+  overflow-x: auto;
+}
+
+.file-patch {
+  background-color: #272822;
+  color: #f8f8f2;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  font-family: monospace;
+  white-space: pre-wrap; /* wrap long lines */
 }

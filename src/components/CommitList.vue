@@ -87,20 +87,35 @@ async function toggleDetails(commit: GithubCommit) {
 
             <!-- Inline Drawer -->
             <transition name="slide-fade">
-            <div
-                v-if="openCommitSha === commit.sha"
-                class="commit-details-drawer"
-            >
-                <div v-if="isLoading">Loading details...</div>
-                <div v-else-if="commitDetails">
-                <h4>Files Changed</h4>
-                <ul>
-                    <li v-for="file in commitDetails.files" :key="file.filename">
-                    <p><strong>{{ file.filename }}</strong> — {{ file.changes }} changes</p>
-                    </li>
-                </ul>
+                <div v-if="openCommitSha === commit.sha" class="commit-details-drawer">
+                    <div v-if="isLoading">Loading details...</div>
+
+                    <div v-else-if="commitDetails">
+                    <!-- Number of files changed -->
+                    <p><strong>Files changed:</strong> {{ commitDetails.files.length }}</p>
+
+                    <h4>Changes per file</h4>
+                    <ul>
+                        <li v-for="file in commitDetails.files" :key="file.filename">
+                        <p>
+                            <strong>{{ file.filename }}</strong> — {{ file.changes }} changes
+                        </p>
+
+                        <!-- Show additions and deletions -->
+                        <p>
+                            +{{ file.additions }} / -{{ file.deletions }}
+                        </p>
+
+                        <!-- Show patch/diff if available -->
+                        <pre v-if="file.patch" class="file-patch">{{ file.patch }}</pre>
+                        </li>
+                    </ul>
+                    </div>
+
+                    <div v-else>
+                    <p>No details available for this commit.</p>
+                    </div>
                 </div>
-            </div>
             </transition>
         </li>
         </ul>
