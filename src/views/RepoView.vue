@@ -118,9 +118,12 @@ const currentFavourites = computed(() => {
 					class="favourite-commits-box"
 				/>
 
-				
-				<!-- Commits List -->
-				<CommitList
+				<!-- Commits heading (fixed above scroll) -->
+				<h2 class="commits-heading">Commits</h2>
+
+				<!-- Scrollable commit list -->
+				<div class="commits-scrollable">
+					<CommitList
 					v-if="githubStore.commits.length"
 					:commits="githubStore.commits"
 					:sortOrder="sortOrder"
@@ -129,29 +132,18 @@ const currentFavourites = computed(() => {
 					@viewDetails="viewCommitDetails"
 					@addFavourite="addFavourite"
 					@removeFavourite="removeFavourite"
-				/>
+					/>
 
-				<CommitList
-					v-if="githubStore.commits.length"
-					:commits="githubStore.commits"
-					:sortOrder="sortOrder"
-					:isFavourite="isFavourite"
-					@sort="sortCommits"
-					@viewDetails="viewCommitDetails"
-					@addFavourite="addFavourite"
-					@removeFavourite="removeFavourite"
-				/>
-
-				<!-- Load more button -->
-				<button
+					<!-- Load more button -->
+					<button
 					v-if="githubStore.hasMoreCommits"
 					@click="loadMoreCommits"
 					class="load-more-button"
-				>
+					>
 					Load More
-				</button>
-
-			</div>
+					</button>
+				</div>
+				</div>
 		</div>
 	</div>
 </template>

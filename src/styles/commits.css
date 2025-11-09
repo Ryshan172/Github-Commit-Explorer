@@ -59,3 +59,24 @@
     opacity: 0;
     transform: translateY(-10px);
 }
+
+.commit-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* fill the right panel */
+}
+
+.favourite-commits-box {
+  margin-bottom: 1rem;
+}
+
+.commits-heading {
+  margin: 0.5rem 0;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+.commits-scrollable {
+  overflow-y: auto;      /* vertical scroll */
+  flex-grow: 1;          /* take remaining height */
+  padding-right: 0.5rem; /* optional for scrollbar */
+}
