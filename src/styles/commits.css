@@ -1,98 +1,138 @@
 .commits-section {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .commits-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 1rem;
 }
 
 .commit-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
 .commit-main {
-    display: flex;
-    flex-direction: column; /* stack items vertically */
-    align-items: flex-start; /* align to left */
-    padding: 1rem;
-    gap: 1rem;
+	display: flex;
+	flex-direction: column;
+	/* stack items vertically */
+	align-items: flex-start;
+	/* align to left */
+	padding: 1rem;
+	gap: 1rem;
 }
 
 /* Make all buttons in commit-actions the same size */
 .commit-actions button {
-    margin-left: 6px;
-    padding: 8px 12px;       /* uniform padding */
-    font-size: 14px;         /* consistent font size */
-    border-radius: 6px;
-    min-width: 80px;         /* make buttons same width */
-    text-align: center;
+	margin-left: 6px;
+	padding: 8px 12px;
+	/* uniform padding */
+	font-size: 14px;
+	/* consistent font size */
+	border-radius: 6px;
+	min-width: 80px;
+	/* make buttons same width */
+	text-align: center;
 }
 
 /* Hover effect */
 .commit-actions button:hover:not(:disabled) {
-    transform: translateY(-1px);
+	transform: translateY(-1px);
 }
 
 
 .commit-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
 }
 
 
 /* Smooth transition for drawer */
 .slide-fade-enter-active,
 .slide-fade-leave-active {
-    transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 .slide-fade-enter-from,
 .slide-fade-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
+	opacity: 0;
+	transform: translateY(-10px);
 }
 
 .commit-panel {
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* fill the right panel */
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	/* fill the right panel */
 }
 
 .favourite-commits-box {
-  margin-bottom: 1rem;
+	margin-bottom: 1rem;
 }
 
 .commits-heading {
-  margin: 0.5rem 0;
-  flex-shrink: 0; /* prevent shrinking */
+	margin: 0.5rem 0;
+	flex-shrink: 0;
+	/* prevent shrinking */
 }
 
 .commits-scrollable {
-  overflow-y: auto;      /* vertical scroll */
-  flex-grow: 1;          /* take remaining height */
-  padding-right: 0.5rem; /* for scrollbar */
+	overflow-y: auto;
+	/* vertical scroll */
+	flex-grow: 1;
+	/* take remaining height */
+	padding-right: 0.5rem;
+	/* for scrollbar */
 }
 
 .commit-details-drawer {
-  background-color: #f9f9f9;
-  padding: 1rem;
-  border-left: 3px solid #ccc;
-  margin-top: 0.5rem;
-  overflow-x: auto;
+	background-color: #f9f9f9;
+	padding: 1rem;
+	border-left: 3px solid #ccc;
+	margin-top: 0.5rem;
+	overflow-x: auto;
 }
 
 .file-patch {
-  background-color: #272822;
-  color: #f8f8f2;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  font-family: monospace;
-  white-space: pre-wrap; /* wrap long lines */
+	background-color: #272822;
+	color: #f8f8f2;
+	padding: 0.5rem;
+	margin-top: 0.25rem;
+	font-family: monospace;
+	white-space: pre-wrap;
+	/* wrap long lines */
+}
+
+#sort {
+    padding: 6px 12px;
+    font-size: 0.95em;
+    border-radius: 8px;
+    border: 1px solid #2f4cb8;
+    background-color: #d0d8ff;
+    color: #1b1f6b;
+    cursor: pointer;
+    appearance: none;
+}
+
+#sort:hover {
+    border-color: #1f39a0;
+}
+
+#sort:focus {
+    outline: none;
+    border-color: #152a8f;
+    box-shadow: 0 0 0 3px rgba(47,76,184,0.3);
+}
+
+#sort option[value="newest"] {
+    color: #1f3fa0;
+}
+
+#sort option[value="oldest"] {
+    color: #3a60c8;
 }

@@ -54,7 +54,6 @@ async function toggleDetails(commit: GithubCommit) {
 <template>
     <section class="commits-section">
         <div class="commits-header">
-        <label for="sort">Sort:</label>
         <select id="sort" v-model="internalSort" @change="emitSort">
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
