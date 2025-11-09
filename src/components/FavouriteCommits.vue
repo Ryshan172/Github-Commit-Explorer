@@ -1,3 +1,13 @@
+/**
+ * Displays a list of favourite GitHub commits.
+ *
+ * Props:
+ * - favourites: Array of GithubCommit objects to display.
+
+ * Usage:
+ * - Used in the main repository view to show commits that the user has marked as favourites.
+ */*
+ 
 <script setup lang="ts">
 import type { GithubCommit } from '@/types/interfaces'
 defineProps<{ favourites: GithubCommit[] }>()

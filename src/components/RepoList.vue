@@ -1,3 +1,17 @@
+/**
+ * Displays a list of GitHub repositories for selection.
+ *
+ * Props:
+ * - repos: Array of GithubRepo objects to display.
+ * - selectedRepo: Currently selected repository name.
+ *
+ * Emits:
+ * - 'select': Triggered when a repository is clicked, passing the repo name.
+ *
+ * Usage:
+ * - Used in the main repository view to allow the user to choose a repository and load its commits.
+ */
+
 <script setup lang="ts">
 import type { GithubRepo } from '@/types/interfaces'
 
