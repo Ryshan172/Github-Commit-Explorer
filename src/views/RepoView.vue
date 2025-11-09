@@ -47,6 +47,14 @@ function sortCommits(order?: 'newest' | 'oldest') {
 	githubStore.commits = sorted
 }
 
+// Load more commits (pagination)
+async function loadMoreCommits() {
+	if (!selectedRepo.value) return
+	await githubStore.loadGithubCommits(username, selectedRepo.value, true)
+	sortCommits()
+}
+
+
 /**
  * Fetch commit details for CommitList drawer
  */
@@ -122,6 +130,27 @@ const currentFavourites = computed(() => {
 					@addFavourite="addFavourite"
 					@removeFavourite="removeFavourite"
 				/>
+
+				<CommitList
+					v-if="githubStore.commits.length"
+					:commits="githubStore.commits"
+					:sortOrder="sortOrder"
+					:isFavourite="isFavourite"
+					@sort="sortCommits"
+					@viewDetails="viewCommitDetails"
+					@addFavourite="addFavourite"
+					@removeFavourite="removeFavourite"
+				/>
+
+				<!-- Load more button -->
+				<button
+					v-if="githubStore.hasMoreCommits"
+					@click="loadMoreCommits"
+					class="load-more-button"
+				>
+					Load More
+				</button>
+
 			</div>
 		</div>
 	</div>
