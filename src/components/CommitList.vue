@@ -31,8 +31,7 @@ async function toggleDetails(commit: GithubCommit) {
         openCommitSha.value = null
         commitDetails.value = null
     } else {
-        // Open new details
-        openCommitSha.value = commit.sha
+        // Start loading details first
         commitDetails.value = null
         isLoading.value = true
 
@@ -41,16 +40,20 @@ async function toggleDetails(commit: GithubCommit) {
         emit('viewDetails', commit.sha, resolve)
         })
 
-        commitDetails.value = await detailsPromise
+        const details = await detailsPromise
+        commitDetails.value = details
         isLoading.value = false
+
+        // Open drawer after details are ready
+        openCommitSha.value = commit.sha
     }
 }
+
 </script>
 
 <template>
     <section class="commits-section">
         <div class="commits-header">
-        <h2>Commits</h2>
         <label for="sort">Sort:</label>
         <select id="sort" v-model="internalSort" @change="emitSort">
             <option value="newest">Newest</option>
