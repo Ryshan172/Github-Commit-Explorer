@@ -82,3 +82,23 @@
 .error {
 	color: red;
 }
+
+.repo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.home-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.home-button img {
+  width: 24px;
+  height: 24px;
+}
+

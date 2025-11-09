@@ -7,6 +7,8 @@ import RepoList from '@/components/RepoList.vue'
 import CommitList from '@/components/CommitList.vue'
 import FavouriteCommits from '@/components/FavouriteCommits.vue'
 import '@/styles/repo.css'
+// For navigation
+import { useRouter } from 'vue-router'
 
 // Store & route
 const githubStore = useGithubStore()
@@ -16,6 +18,13 @@ const username = route.params.username as string
 // Local state
 const selectedRepo = ref<string | null>(null)
 const sortOrder = ref<'newest' | 'oldest'>('newest')
+
+// Moving back to home page
+const router = useRouter()
+
+function goHome() {
+  	router.push('/')
+}
 
 // Compute repoKey for favourites
 const repoKey = computed(() => {
@@ -94,7 +103,13 @@ const currentFavourites = computed(() => {
 
 <template>
 	<div class="repo-container">
-		<h1>{{ username }}’s Repositories</h1>
+		<div class="repo-header">
+			<h1>{{ username }}’s Repositories</h1>
+			<button class="home-button" @click="goHome">
+				<img src="@/assets/home.png" alt="Home" />
+			</button>
+		</div>
+
 
 		<p v-if="githubStore.errorMessage" class="error">{{ githubStore.errorMessage }}</p>
 

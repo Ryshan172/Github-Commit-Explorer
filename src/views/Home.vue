@@ -61,7 +61,6 @@ const handleSubmit = async () => {
         <img src="@/assets/github_icon.png" alt="GitHub Logo" class="github-icon" />
         <h1 class="title">GitHub Commit Explorer App</h1>
         <form @submit.prevent="handleSubmit">
-            <label for="username">GitHub Username:</label>
             <input
                 id="username"
                 v-model="username"
