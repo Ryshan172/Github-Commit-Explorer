@@ -1,21 +1,39 @@
 /* Centering the container on the full page */
+html,
 body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    /* remove default margin */
+    padding: 0;
+    /* remove default padding */
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+
+/* Container panel */
+.home-container {
+    width: 100%;
+    /* default width */
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* full viewport height */
-    margin: 0;
-    background-color: #f0f2f5; /* optional background color */
+    height: 100vh;
 }
 
-.home-container {
-    width: 500px; /* wider panel */
-    max-width: 90%; /* responsive for small screens */
-    padding: 30px;
-    text-align: center;
-    border-radius: 12px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Content inside container */
+.home-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 800px;
+    background-color: #e9e9ff;  /* subtle light blue background */
+    border-radius: 10px;
+    padding: 15px 20px; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* subtle shadow */
 }
 
 .github-icon {
@@ -24,8 +42,19 @@ body {
     margin-bottom: 15px;
 }
 
+.description {
+    font-size: 1.2em;           /* slightly larger text */
+    color: #1b1f6b;             /* dark blue, matching the title */
+    margin: 0 auto 25px auto;   /* center horizontally and spacing below */
+    line-height: 1.6;           /* improve readability */
+    text-align: center;
+    max-width: 600px;           /* reduce width */
+}
+
+
 .title {
-    color: #1b1f6b; /* Dark blue */
+    color: #1b1f6b;
+    /* Dark blue */
     font-size: 24px;
     margin-bottom: 25px;
     font-weight: 600;
@@ -62,10 +91,6 @@ button {
     transition: background-color 0.2s, transform 0.1s;
 }
 
-button:hover:not(:disabled) {
-    background-color: #15186b;
-    transform: translateY(-1px);
-}
 
 button:disabled {
     background-color: #888;

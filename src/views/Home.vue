@@ -58,9 +58,17 @@ const handleSubmit = async () => {
 
 <template>
     <div class="home-container">
-        <img src="@/assets/github_icon.png" alt="GitHub Logo" class="github-icon" />
-        <h1 class="title">GitHub Commit Explorer App</h1>
-        <form @submit.prevent="handleSubmit">
+        <div class="home-content">
+            <img src="@/assets/github_icon.png" alt="GitHub Logo" class="github-icon" />
+            <h1 class="title">GitHub Commit Explorer App</h1>
+
+            <!-- Description panel -->
+            <p class="description">
+                Explore any GitHub user's public repositories and view their commits. 
+                Mark commits as favourites and navigate through commit details.
+            </p>
+
+            <form @submit.prevent="handleSubmit">
             <input
                 id="username"
                 v-model="username"
@@ -72,6 +80,7 @@ const handleSubmit = async () => {
             <button type="submit" :disabled="loading">
                 {{ loading ? 'Loading...' : 'Fetch Repositories' }}
             </button>
-        </form>
+            </form>
+        </div>
     </div>
 </template>
