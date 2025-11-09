@@ -1,6 +1,6 @@
 // stores/githubStore.ts
 import { defineStore } from 'pinia'
-import type { GithubCommit, GithubState, GithubRepo, CommitDetails } from '@/types/interfaces'
+import type { GithubCommit, GithubState, CommitDetails } from '@/types/interfaces'
 import { fetchUserRepos, fetchRepoCommits, fetchCommitDetails } from '@/api/endpoints'
 
 export const useGithubStore = defineStore<'github', GithubState, {}, {

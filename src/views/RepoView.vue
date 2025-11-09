@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useGithubStore } from '@/stores/github'
 import type { GithubCommit, CommitDetails } from '@/types/interfaces'
@@ -33,7 +33,7 @@ const repoKey = computed(() => {
 // Reset commits/repos when username changes
 watch(
     () => username.value,
-    async (newUsername, oldUsername) => {
+    async (newUsername) => {
         if (!newUsername) return
 
         // Clear previous state

@@ -4,8 +4,6 @@ import { useRouter } from 'vue-router'
 import '@/styles/home.css'
 import { useGithubStore } from '@/stores/github'
 
-// Import GitHub icon from assets
-import githubIcon from '@/assets/github_icon.png'
 
 const username = ref('')
 const errorMessage = ref('')

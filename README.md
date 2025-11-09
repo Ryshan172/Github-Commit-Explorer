@@ -19,7 +19,8 @@ A web based application which allows users to explore and track commits of a git
 
 ## Run 
 
-The following commands can be used to build, run and test the application:
+- Clone or download the repo.
+- The following commands can be used to build, run and test the application:
 
 ```
 # Install dependencies
@@ -30,6 +31,9 @@ npm run dev
 
 # Build for production
 npm run build
+
+# Test Build 
+npm run preview
 
 # Run unit tests
 npm run test
